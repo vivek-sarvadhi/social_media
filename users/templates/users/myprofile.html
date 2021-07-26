@@ -1,0 +1,111 @@
+{% extends 'users/base.html' %}
+
+{% block title%} profile {% endblock %}
+{% block content %}
+
+    
+<div class="ui modal mymodal mymodal2">
+    <i class="close icon"></i>
+    <div class="header">
+        Update your profile
+    </div>
+    <div class="image content">
+        <div class="ui medium image">
+        <img src="{{profile.profile.url}}">
+        </div>
+        <div class="description">
+        <div class="ui header">Provide some addition info about you</div>
+        <form action="" method="POST" enctype="multipart/form-data" class="ui form">{% csrf_token %}
+            {{form1.as_p}} 
+        </div>
+    </div>
+    <div class="actions">
+        <button type="submit" class="ui positive right labeled icon button">
+        Update
+        <i class="checkmark icon"></i>
+        </button>
+    </form>
+    </div>
+</div>
+
+
+<div class="ui segment">
+    {% if confirm %}
+        <div class="ui green message">Your profile has been updated</div>
+    {% endif %}
+    <h3>my profile {{request.user}}</h3>
+    <div class="ui grid">
+        <div class="row">
+            <div class="six wide column">
+                <img class="ui medium rounded image" src="{{profile.profile.url}}">
+                <div class="row mt-5">
+                    <form method="POST" id="addcontent" action="#" class="form-horizontal form-bordered" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form.profile}}
+                    </form>
+                    <div class="sec ui secondary button" style="cursor: pointer;" onclick="myfun()">UPLOAD PROFILE IMAGE</div>
+                    <script>    
+                       function myfun(){
+                           console.log("hello")
+                            $("#id_profile").click();
+                       }
+                        $('#addcontent #id_profile').on('change', function() {
+                            console.log("oiuguigfggfdgfdggiug")
+                                this.form.submit();
+                            });
+                    </script>
+                </div>
+            </div>
+            <div class="ten wide column">
+                <table class="ui table">
+                    <tbody>
+                        <tr>
+                            <td>username:</td>
+                            <td>{{profile.user}}</td>
+                        </tr>
+                        <tr>
+                            <td>first name:</td>
+                            <td>{{profile.first_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>last name:</td>
+                            <td>{{profile.last_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>bio:</td>
+                            <td>{{profile.bio}}</td>
+                        </tr>
+                        <tr>
+                            <td>Number of friends:</td>
+                            <td>{{profile.get_friends_no}}</td>
+                        </tr>
+                        <tr>
+                            <td>Number of friends:</td>
+                            <td> 
+                                <ul>
+                                {% for friend in profile.get_friends %}
+                                    <li>{{friend}}</li>
+                                {% endfor %}
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Number of posts:</td>
+                            <td>{{profile.get_post_no}}</td>
+                        </tr>
+                        <tr>
+                            <td>Number of likes given:</td>
+                            <td>{{profile.get_likes_given_no}}</td>
+                        </tr>
+                        <tr>
+                            <td>Number of likes received:</td>
+                            <td>{{profile.get_likes_recieved_no}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="ui secondary button" id="modal-btn1">Update your profile</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
